@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wil-playground
+  namespace: argocd
+spec:
+  destination:
+    namespace: dev
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/ton-utilisateur/ton-repo.git  # Remplace par ton GitHub
+    targetRevision: HEAD
+    path: .
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
