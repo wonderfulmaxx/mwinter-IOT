@@ -1,20 +1,17 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
-  name: wil-playground
-  namespace: dev
+  name: test
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: wil-playground
-  template:
-    metadata:
-      labels:
-        app: wil-playground
-    spec:
-      containers:
-      - name: wil-playground
-        image: wil42/playground:v1  
-        ports:
-        - containerPort: 8888
+  project: development
+  source:
+    repoURL: https://github.com/wonderfulmaxx/mwinter-IOT
+    targetRevision: HEAD
+    path: .
+  destination:
+    server : https://kubernetes.default.svc
+    namespace: dev  
+syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
